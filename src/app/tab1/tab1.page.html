@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Dispositivos
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,38 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Dispositivos</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-card *ngIf="!is_enabled">
+    <ion-card-content>
+      Encienda el bluetooth
+    </ion-card-content>
+  </ion-card>
+
+  <!--  <app-explore-container name="Tab 1 page"></app-explore-container> -->
+  <ion-button (click)="scanDevices()">Escanear dispositivos</ion-button>
+  <ion-button (click)="checkConnection()">Checkear conección</ion-button>
+
+  <div class="logs" *ngIf="logs.length">{{logs}}</div>
+
+  <div>
+    <ion-list *ngIf="devices.length">
+      <ion-item *ngFor="let device of devices">
+        <ion-label class="device-label" (click)="connectDevice(device.address)" [ngClass]="{'device-label-active':device.address==device_address}">{{device.name}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div style="display: block;">
+    <canvas baseChart width="400" height="400"
+      [type]="'line'"
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [legend]="lineChartLegend">
+    </canvas>
+  </div>
+  
+
 </ion-content>
